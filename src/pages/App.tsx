@@ -1,8 +1,22 @@
 import React from "react";
-import "./App.css";
+import { Box } from "@mui/system";
+import Characters from "../components/Characters/Characters";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <Box
+      className="App"
+      sx={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Characters />
+    </Box>
+  );
 }
 
 export default App;
