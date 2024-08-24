@@ -20,6 +20,7 @@ const findNextCharacters = (page: number) => {
 };
 
 export const getCharacters = async (page: number) => {
+  console.log("Fetching new characters.... \nPage: ", page);
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${findNextCharacters(page)}]`
   );

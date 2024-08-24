@@ -12,28 +12,42 @@ import CustomHeadCell from "./CustomHeadCell";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCharacters } from "../../utils/characters.api";
 import CharacterRow from "./CharacterRow";
+import useInfiniteScroll from "react-infinite-scroll-hook";
 
 const Characters = ({ ...props }) => {
-  const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey: ["characters"],
-      queryFn: ({ pageParam }: { pageParam: number }) =>
-        getCharacters(pageParam),
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-        return lastPageParam + 1;
-      },
-    });
+  const {
+    data,
+    isSuccess,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isFetchNextPageError,
+  } = useInfiniteQuery({
+    queryKey: ["characters"],
+    queryFn: ({ pageParam }: { pageParam: number }) => getCharacters(pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      return lastPageParam + 1;
+    },
+  });
 
-  const handleLoadMoreCharacters = () => {
-    fetchNextPage();
-  };
+  const [infiniteRef, { rootRef }] = useInfiniteScroll({
+    loading: isFetchingNextPage,
+    hasNextPage,
+    onLoadMore: fetchNextPage,
+    disabled: Boolean(isFetchNextPageError),
+    rootMargin: "0px 0px 450px 0px",
+    delayInMs: 50,
+  });
 
   return (
-    <Box sx={{ width: "1084px", maxHeight: "460px", overflow: "auto" }}>
+    <Box
+      sx={{ width: "1084px", maxHeight: "460px", overflow: "auto" }}
+      ref={rootRef}
+    >
       <Table sx={{ width: "100%" }} stickyHeader={true}>
         <TableHead>
-          <TableRow>
+          <TableRow key="header-row">
             <CustomHeadCell>name</CustomHeadCell>
             <CustomHeadCell>status</CustomHeadCell>
             <CustomHeadCell>genger</CustomHeadCell>
@@ -47,13 +61,17 @@ const Characters = ({ ...props }) => {
           {data?.pages.map((pagesCollection) => (
             <>
               {pagesCollection.map((page: any) => (
-                <CharacterRow characterData={page} />
+                <CharacterRow key={page.id} characterData={page} />
               ))}
             </>
           ))}
         </TableBody>
       </Table>
-      <Button onClick={handleLoadMoreCharacters}>Load more</Button>
+      {hasNextPage && (
+        <Box ref={infiniteRef}>
+          {isFetchingNextPage ? "Loading more..." : ""}
+        </Box>
+      )}
     </Box>
   );
 };
