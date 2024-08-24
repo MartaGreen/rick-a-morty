@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -11,6 +11,7 @@ import {
 import CustomHeadCell from "./CustomHeadCell";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getCharacters } from "../../utils/characters.api";
+import CharacterRow from "./CharacterRow";
 
 const Characters = ({ ...props }) => {
   const { data, isSuccess, hasNextPage, fetchNextPage, isFetchingNextPage } =
@@ -29,8 +30,8 @@ const Characters = ({ ...props }) => {
   };
 
   return (
-    <Box sx={{ width: "1084px", maxHeight: "600px", overflow: "auto" }}>
-      <Table sx={{ width: "100%" }}>
+    <Box sx={{ width: "1084px", maxHeight: "460px", overflow: "auto" }}>
+      <Table sx={{ width: "100%" }} stickyHeader={true}>
         <TableHead>
           <TableRow>
             <CustomHeadCell>name</CustomHeadCell>
@@ -39,27 +40,17 @@ const Characters = ({ ...props }) => {
             <CustomHeadCell>species</CustomHeadCell>
             <CustomHeadCell>created</CustomHeadCell>
             <CustomHeadCell>origin</CustomHeadCell>
-            <CustomHeadCell></CustomHeadCell>
+            <CustomHeadCell>url</CustomHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.pages.map((pagesCollection) => {
-            return (
-              <>
-                {pagesCollection.map((page: any) => (
-                  <TableRow key={page.id}>
-                    <TableCell>{page.name}</TableCell>
-                    <TableCell>{page.status}</TableCell>
-                    <TableCell>{page.gender}</TableCell>
-                    <TableCell>{page.species}</TableCell>
-                    <TableCell>{page.created}</TableCell>
-                    <TableCell>{page.origin.name}</TableCell>
-                    <TableCell>{page.url}</TableCell>
-                  </TableRow>
-                ))}
-              </>
-            );
-          })}
+          {data?.pages.map((pagesCollection) => (
+            <>
+              {pagesCollection.map((page: any) => (
+                <CharacterRow characterData={page} />
+              ))}
+            </>
+          ))}
         </TableBody>
       </Table>
       <Button onClick={handleLoadMoreCharacters}>Load more</Button>
