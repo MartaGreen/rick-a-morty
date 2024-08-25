@@ -12,6 +12,7 @@ function App() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: "dark",
       }}
     >
       <Characters />

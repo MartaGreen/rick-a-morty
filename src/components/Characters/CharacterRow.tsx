@@ -1,6 +1,8 @@
-import { TableCell, TableRow } from "@mui/material";
 import React from "react";
+import { TableCell, TableRow, Typography } from "@mui/material";
 import { CharacterT } from "./CharacterType";
+import StyledChip from "../customization/Tag";
+import { Cross, Tick, QuestionMark } from "../icons";
 
 const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   const { id, name, status, gender, species, created, origin, url } =
@@ -9,7 +11,26 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   return (
     <TableRow key={id}>
       <TableCell>{name}</TableCell>
-      <TableCell>{status}</TableCell>
+      <TableCell>
+        <StyledChip
+          type={status}
+          label={
+            <Typography
+              sx={{
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                fontSize: "12px",
+              }}
+            >
+              {status}
+            </Typography>
+          }
+          icon={
+            (status === "Alive" && <Tick />) ||
+            (status === "Dead" && <Cross />) || <QuestionMark />
+          }
+        />
+      </TableCell>
       <TableCell>{gender}</TableCell>
       <TableCell>{species}</TableCell>
       <TableCell>{created}</TableCell>
