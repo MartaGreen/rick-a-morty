@@ -1,4 +1,5 @@
-export const PAGE_LIMIT: number = 5;
+/* Amount of characters per page */
+export const PAGE_SIZE: number = 5;
 
 /**
  * Returns a comma-separated string of the next 5 character IDs based on the page number
@@ -10,11 +11,11 @@ export const PAGE_LIMIT: number = 5;
  * @param {number} page - The current page number (starting from 1).
  * @returns {string} - A string of 5 character IDs, separated by commas.
  */
-const findNextCharacters = (page: number) => {
+const generateCharactersIds = (page: number) => {
   // calculate ids for the 5 characters to devide them into pages
   const arr: number[] = Array.from(
-    { length: 5 },
-    (elem, i) => i + 1 + (page - 1) * 5
+    { length: PAGE_SIZE },
+    (elem, i) => i + 1 + (page - 1) * PAGE_SIZE
   );
   return arr.join(",");
 };
@@ -22,7 +23,7 @@ const findNextCharacters = (page: number) => {
 export const getCharacters = async (page: number) => {
   console.log("Fetching new characters.... \nPage: ", page);
   const response = await fetch(
-    `https://rickandmortyapi.com/api/character/[${findNextCharacters(page)}]`
+    `https://rickandmortyapi.com/api/character/[${generateCharactersIds(page)}]`
   );
   return response.json();
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Box,
   Button,
@@ -27,6 +27,7 @@ const Characters = ({ ...props }) => {
     queryFn: ({ pageParam }: { pageParam: number }) => getCharacters(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
+      console.log("allPageParams", allPageParams);
       return lastPageParam + 1;
     },
   });
@@ -39,6 +40,12 @@ const Characters = ({ ...props }) => {
     rootMargin: "0px 0px 450px 0px",
     delayInMs: 50,
   });
+
+  // const pagesTotal = useMemo(() => {
+  //   data
+  // }, []);
+
+  console.log(data);
 
   return (
     <Box
