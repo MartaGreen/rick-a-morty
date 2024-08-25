@@ -1,23 +1,19 @@
-import React, { useMemo } from "react";
-import {
-  Box,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import React from "react";
+import { Box, Table, TableBody, TableHead, TableRow } from "@mui/material";
 import CustomHeadCell from "./CustomHeadCell";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { getCharacters } from "../../utils/characters.api";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getCharacters, getPagesTotal } from "../../utils/characters.api";
 import CharacterRow from "./CharacterRow";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 
-const Characters = ({ ...props }) => {
+const Characters = () => {
+  const { data: pagesTotal } = useQuery({
+    queryKey: ["pagesTotal"],
+    queryFn: getPagesTotal,
+  });
+
   const {
     data,
-    isSuccess,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
@@ -26,10 +22,12 @@ const Characters = ({ ...props }) => {
     queryKey: ["characters"],
     queryFn: ({ pageParam }: { pageParam: number }) => getCharacters(pageParam),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages, lastPageParam, allPageParams) => {
-      console.log("allPageParams", allPageParams);
-      return lastPageParam + 1;
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      const nextPage = lastPageParam + 1;
+      console.log("Fetching next page... ", nextPage);
+      return nextPage === pagesTotal ? undefined : nextPage;
     },
+    enabled: !!pagesTotal,
   });
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
@@ -37,13 +35,9 @@ const Characters = ({ ...props }) => {
     hasNextPage,
     onLoadMore: fetchNextPage,
     disabled: Boolean(isFetchNextPageError),
-    rootMargin: "0px 0px 450px 0px",
+    rootMargin: "0px 0px 300px 0px",
     delayInMs: 50,
   });
-
-  // const pagesTotal = useMemo(() => {
-  //   data
-  // }, []);
 
   console.log(data);
 

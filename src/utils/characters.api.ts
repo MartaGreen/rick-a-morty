@@ -21,9 +21,28 @@ const generateCharactersIds = (page: number) => {
 };
 
 export const getCharacters = async (page: number) => {
-  console.log("Fetching new characters.... \nPage: ", page);
+  console.log("Fetching data....");
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${generateCharactersIds(page)}]`
   );
   return response.json();
+};
+
+type PagesResponseT = {
+  info: {
+    count: number;
+    pages: number;
+    next: string | null;
+    prev: string | null;
+  };
+};
+
+export const getPagesTotal = async () => {
+  const response = await fetch("https://rickandmortyapi.com/api/character");
+  const totalResponse = response.json().then((data: PagesResponseT) => {
+    const charactersTotal = data.info.count;
+    return Math.ceil(charactersTotal / PAGE_SIZE);
+  });
+
+  return totalResponse;
 };
