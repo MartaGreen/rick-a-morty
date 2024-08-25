@@ -6,7 +6,7 @@ type StyledT = {
 };
 
 const CustomCell = styled(TableCell)(({ theme }: StyledT) => ({
-  borderBottom: theme?.palette.lightGray,
+  borderColor: theme?.palette.lightGray,
   color: theme?.palette.lightGray,
 }));
 

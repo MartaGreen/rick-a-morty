@@ -43,18 +43,34 @@ const Characters = () => {
 
   return (
     <Box
-      sx={{ width: "1084px", maxHeight: "460px", overflow: "auto" }}
+      sx={{
+        width: "1084px",
+        maxHeight: "460px",
+        overflow: "auto",
+      }}
       ref={rootRef}
     >
-      <Table sx={{ width: "100%" }} stickyHeader={true}>
+      <Table sx={{ width: "100%", minWidth: "1084px" }} stickyHeader={true}>
         <TableHead>
           <TableRow key="header-row">
-            <CustomHeadCell>name</CustomHeadCell>
-            <CustomHeadCell>status</CustomHeadCell>
-            <CustomHeadCell>genger</CustomHeadCell>
-            <CustomHeadCell>species</CustomHeadCell>
-            <CustomHeadCell>created</CustomHeadCell>
-            <CustomHeadCell>origin</CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "248px", width: "248px" }}>
+              name
+            </CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "175px", width: "175px" }}>
+              status
+            </CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "133px", width: "133px" }}>
+              genger
+            </CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "135px", width: "135px" }}>
+              species
+            </CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "153px", width: "153px" }}>
+              created
+            </CustomHeadCell>
+            <CustomHeadCell sx={{ maxWidth: "175px", width: "175px" }}>
+              origin
+            </CustomHeadCell>
             <CustomHeadCell>url</CustomHeadCell>
           </TableRow>
         </TableHead>

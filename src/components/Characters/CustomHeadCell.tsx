@@ -1,4 +1,3 @@
-import React from "react";
 import { TableCell } from "@mui/material";
 
 type CustomTableCellT = {
@@ -9,7 +8,16 @@ type CustomTableCellT = {
 
 const CustomHeadCell = ({ children, name, sx, ...props }: CustomTableCellT) => {
   return (
-    <TableCell sx={{ textTransform: "uppercase", ...sx }} {...props}>
+    <TableCell
+      sx={{
+        textTransform: "uppercase",
+        borderColor: "lightGray",
+        backgroundColor: "dark",
+        color: "lightGray",
+        ...sx,
+      }}
+      {...props}
+    >
       {children || name}
     </TableCell>
   );
