@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Table, TableBody, TableHead, TableRow } from "@mui/material";
-import CustomHeadCell from "./CustomHeadCell";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getCharacters, getPagesTotal } from "../../utils/characters.api";
-import CharacterRow from "./CharacterRow";
 import useInfiniteScroll from "react-infinite-scroll-hook";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { getCharacters, getPagesTotal } from "@utils/characters.api";
+import CharacterRow from "./CharacterRow";
+import CustomHeadCell from "./CustomHeadCell";
 
 const Characters = () => {
   const { data: pagesTotal } = useQuery({

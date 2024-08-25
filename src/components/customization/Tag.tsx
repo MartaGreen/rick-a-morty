@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Chip, Theme } from "@mui/material";
-import { StatusT } from "../Characters/CharacterType";
+import { StatusT } from "@components/Characters/CharacterType";
 
 type ChipStyledT = {
   theme?: Theme;

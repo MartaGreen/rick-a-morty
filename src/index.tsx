@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./pages/App";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "@mui/material";
-import theme from "./config/mui-theme";
+import theme from "@config/mui-theme";
+import App from "@pages/App";
 
 const queryClient = new QueryClient();
 

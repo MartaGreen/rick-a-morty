@@ -1,8 +1,9 @@
 import React from "react";
-import { TableCell, TableRow, Typography } from "@mui/material";
+import { TableRow, Typography } from "@mui/material";
+import CustomCell from "@components/customization/CustomCell";
 import { CharacterT } from "./CharacterType";
-import StyledChip from "../customization/Tag";
-import { Cross, Tick, QuestionMark } from "../icons";
+import StyledChip from "@components/customization/Tag";
+import { Cross, Tick, QuestionMark } from "@components/icons";
 
 const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   const { id, name, status, gender, species, created, origin, url } =
@@ -10,8 +11,8 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
 
   return (
     <TableRow key={id}>
-      <TableCell>{name}</TableCell>
-      <TableCell>
+      <CustomCell>{name}</CustomCell>
+      <CustomCell>
         <StyledChip
           type={status}
           label={
@@ -30,12 +31,12 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
             (status === "Dead" && <Cross />) || <QuestionMark />
           }
         />
-      </TableCell>
-      <TableCell>{gender}</TableCell>
-      <TableCell>{species}</TableCell>
-      <TableCell>{created}</TableCell>
-      <TableCell>{origin.name}</TableCell>
-      <TableCell>{url}</TableCell>
+      </CustomCell>
+      <CustomCell>{gender}</CustomCell>
+      <CustomCell>{species}</CustomCell>
+      <CustomCell>{created}</CustomCell>
+      <CustomCell>{origin.name}</CustomCell>
+      <CustomCell>{url}</CustomCell>
     </TableRow>
   );
 };
