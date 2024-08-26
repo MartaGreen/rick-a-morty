@@ -17,6 +17,8 @@ const StyledChip = styled(Chip)(({ theme, type }: ChipStyledT) => ({
     theme?.palette.gray,
   padding: "4px 6px",
   borderRadius: "4px",
+  gap: "4px",
+  height: "max-content",
 }));
 
 export default StyledChip;

@@ -45,16 +45,11 @@ const CustomHeadCell = ({
       {...props}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: "2px" }}>
-        <Typography>{children || name}</Typography>
+        <Typography variant="h4">{children || name}</Typography>
         {!!type && (
           <Box
             sx={{
-              width: "16px",
-              height: "16px",
               transform: `rotate(${sortDesc ? 180 : 0}deg)`,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
             }}
           >
             <Arrow />

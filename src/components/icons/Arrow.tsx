@@ -1,4 +1,5 @@
 import React from "react";
+import WidthIcon from "./WidthIcon";
 
 function Arrow({ ...props }) {
   return (
@@ -17,4 +18,4 @@ function Arrow({ ...props }) {
   );
 }
 
-export default Arrow;
+export default WidthIcon(Arrow);

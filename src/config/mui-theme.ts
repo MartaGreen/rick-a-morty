@@ -25,6 +25,15 @@ const theme = createTheme({
     gray: "#424345",
     lightGray: "#BCBDBD",
   },
+  typography: {
+    fontFamily: ["Montserrat", "sans-serif"].join(","),
+    fontSize: 14,
+    h4: {
+      fontFamily: ["Oswald", "sans-serif"].join(","),
+      fontSize: "13px",
+      letterSpacing: "2.6px",
+    },
+  },
 });
 
 export default theme;

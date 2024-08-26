@@ -1,4 +1,5 @@
 import React from "react";
+import WidthIcon from "./WidthIcon";
 
 function Tick({ ...props }) {
   return (
@@ -21,4 +22,4 @@ function Tick({ ...props }) {
   );
 }
 
-export default Tick;
+export default WidthIcon(Tick);

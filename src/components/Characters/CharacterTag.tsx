@@ -14,6 +14,7 @@ function CharacterTag({ type, ...props }: { type: StatusT }) {
             textTransform: "capitalize",
             fontWeight: "bold",
             fontSize: "12px",
+            p: 0,
           }}
         >
           {type}
@@ -23,6 +24,14 @@ function CharacterTag({ type, ...props }: { type: StatusT }) {
         (type === "Alive" && <Tick />) ||
         (type === "Dead" && <Cross />) || <QuestionMark />
       }
+      sx={{
+        ".MuiChip-label": {
+          p: 0,
+        },
+        ".MuiChip-icon": {
+          margin: 0,
+        },
+      }}
       {...props}
     />
   );

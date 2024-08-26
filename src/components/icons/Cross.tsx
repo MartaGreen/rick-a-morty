@@ -1,4 +1,5 @@
 import React from "react";
+import WidthIcon from "./WidthIcon";
 
 function Cross({ ...props }) {
   return (
@@ -18,4 +19,4 @@ function Cross({ ...props }) {
   );
 }
 
-export default Cross;
+export default WidthIcon(Cross);

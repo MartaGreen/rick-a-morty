@@ -112,7 +112,7 @@ const Characters = () => {
             >
               origin
             </CustomHeadCell>
-            <CustomHeadCell>url</CustomHeadCell>
+            <CustomHeadCell>detail</CustomHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>

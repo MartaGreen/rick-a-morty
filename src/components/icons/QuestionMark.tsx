@@ -1,4 +1,5 @@
 import React from "react";
+import WidthIcon from "./WidthIcon";
 
 function QuestionMark({ ...props }) {
   return (
@@ -23,4 +24,4 @@ function QuestionMark({ ...props }) {
   );
 }
 
-export default QuestionMark;
+export default WidthIcon(QuestionMark);
