@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Table, TableBody, TableHead, TableRow } from "@mui/material";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getCharacters, getPagesTotal } from "@utils/characters.api";
 import CharacterRow from "./CharacterRow";
 import CustomHeadCell from "./CustomHeadCell";
+import { CharacterT } from "./CharacterType";
 
 const Characters = () => {
+  const [characters, setCharacters] = useState<CharacterT[]>(
+    [] as CharacterT[]
+  );
+
+  // Fetch characters' total pages amount
   const { data: pagesTotal } = useQuery({
     queryKey: ["pagesTotal"],
     queryFn: getPagesTotal,
@@ -27,8 +33,16 @@ const Characters = () => {
       console.log("Fetching next page... ", nextPage);
       return nextPage === pagesTotal ? undefined : nextPage;
     },
-    enabled: !!pagesTotal,
+    enabled: !!pagesTotal, // Wait until total pages data is fetched
   });
+
+  useEffect(() => {
+    if (!data) return;
+
+    const lastPage: number = data.pageParams.length - 1;
+    const freshAddedCharacters = data.pages[lastPage];
+    setCharacters((prevState) => prevState.concat(freshAddedCharacters));
+  }, [data]);
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
     loading: isFetchingNextPage,
@@ -38,8 +52,6 @@ const Characters = () => {
     rootMargin: "0px 0px 300px 0px",
     delayInMs: 50,
   });
-
-  console.log(data);
 
   return (
     <Box
@@ -53,34 +65,59 @@ const Characters = () => {
       <Table sx={{ width: "100%", minWidth: "1084px" }} stickyHeader={true}>
         <TableHead>
           <TableRow key="header-row">
-            <CustomHeadCell sx={{ maxWidth: "248px", width: "248px" }}>
+            <CustomHeadCell
+              sx={{ maxWidth: "248px", width: "248px" }}
+              type="name"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               name
             </CustomHeadCell>
-            <CustomHeadCell sx={{ maxWidth: "175px", width: "175px" }}>
+            <CustomHeadCell
+              sx={{ maxWidth: "175px", width: "175px" }}
+              type="status"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               status
             </CustomHeadCell>
-            <CustomHeadCell sx={{ maxWidth: "133px", width: "133px" }}>
+            <CustomHeadCell
+              type="gender"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               genger
             </CustomHeadCell>
-            <CustomHeadCell sx={{ maxWidth: "135px", width: "135px" }}>
+            <CustomHeadCell
+              sx={{ maxWidth: "135px", width: "135px" }}
+              type="species"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               species
             </CustomHeadCell>
-            <CustomHeadCell sx={{ maxWidth: "153px", width: "153px" }}>
+            <CustomHeadCell
+              sx={{ maxWidth: "153px", width: "153px" }}
+              type="created"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               created
             </CustomHeadCell>
-            <CustomHeadCell sx={{ maxWidth: "175px", width: "175px" }}>
+            <CustomHeadCell
+              sx={{ maxWidth: "175px", width: "175px" }}
+              type="origin"
+              characters={characters}
+              setCharacters={setCharacters}
+            >
               origin
             </CustomHeadCell>
             <CustomHeadCell>url</CustomHeadCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data?.pages.map((pagesCollection) => (
-            <>
-              {pagesCollection.map((page: any) => (
-                <CharacterRow key={page.id} characterData={page} />
-              ))}
-            </>
+          {characters.map((character: any) => (
+            <CharacterRow key={character.id} characterData={character} />
           ))}
         </TableBody>
       </Table>
