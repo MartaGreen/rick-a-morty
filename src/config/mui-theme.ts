@@ -7,6 +7,7 @@ declare module "@mui/material/styles" {
     red: string;
     gray: string;
     lightGray: string;
+    lightBlue: string;
   }
   interface PaletteOptions {
     dark: string;
@@ -14,6 +15,7 @@ declare module "@mui/material/styles" {
     red: string;
     gray: string;
     lightGray: string;
+    lightBlue: string;
   }
 }
 
@@ -24,6 +26,7 @@ const theme = createTheme({
     red: "#FB6F6D",
     gray: "#424345",
     lightGray: "#BCBDBD",
+    lightBlue: "#59ABE6",
   },
   typography: {
     fontFamily: ["Montserrat", "sans-serif"].join(","),

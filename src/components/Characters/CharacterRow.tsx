@@ -16,7 +16,16 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   var today = new Date(created);
 
   return (
-    <TableRow key={id}>
+    <TableRow
+      sx={{
+        "&:hover": {
+          bgcolor: "black",
+          cursor: "pointer",
+          transition: "0.3s",
+        },
+      }}
+      key={id}
+    >
       <CustomCell
         sx={{
           display: "flex",
@@ -47,7 +56,17 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
           origin.name}
       </CustomCell>
       <CustomCell>
-        <a href={url}>Link</a>
+        <a style={{ textDecoration: "none" }} href={url}>
+          <Typography
+            sx={{
+              color: "lightBlue",
+              textDecoration: "underline",
+              textDecorationColor: "lightBlue",
+            }}
+          >
+            Link
+          </Typography>
+        </a>
       </CustomCell>
     </TableRow>
   );

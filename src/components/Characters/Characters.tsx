@@ -66,7 +66,7 @@ const Characters = () => {
         <TableHead>
           <TableRow key="header-row">
             <CustomHeadCell
-              sx={{ maxWidth: "248px", width: "248px" }}
+              sx={{ minWidth: "250px", width: "248px" }}
               type="name"
               characters={characters}
               setCharacters={setCharacters}
@@ -74,7 +74,7 @@ const Characters = () => {
               name
             </CustomHeadCell>
             <CustomHeadCell
-              sx={{ maxWidth: "175px", width: "175px" }}
+              sx={{ minWidth: "174px", width: "174px" }}
               type="status"
               characters={characters}
               setCharacters={setCharacters}
@@ -85,11 +85,12 @@ const Characters = () => {
               type="gender"
               characters={characters}
               setCharacters={setCharacters}
+              sx={{ minWidth: "133px", width: "133px" }}
             >
               genger
             </CustomHeadCell>
             <CustomHeadCell
-              sx={{ maxWidth: "135px", width: "135px" }}
+              sx={{ minWidth: "135px", width: "135px" }}
               type="species"
               characters={characters}
               setCharacters={setCharacters}
@@ -97,7 +98,7 @@ const Characters = () => {
               species
             </CustomHeadCell>
             <CustomHeadCell
-              sx={{ maxWidth: "153px", width: "153px" }}
+              sx={{ minWidth: "153px", width: "153px" }}
               type="created"
               characters={characters}
               setCharacters={setCharacters}
@@ -105,7 +106,7 @@ const Characters = () => {
               created
             </CustomHeadCell>
             <CustomHeadCell
-              sx={{ maxWidth: "175px", width: "175px" }}
+              sx={{ minWidth: "175px", width: "175px" }}
               type="origin"
               characters={characters}
               setCharacters={setCharacters}

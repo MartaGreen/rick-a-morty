@@ -36,9 +36,10 @@ const CustomHeadCell = ({
     <TableCell
       sx={{
         textTransform: "uppercase",
-        borderColor: "lightGray",
+        borderColor: "gray",
         backgroundColor: "dark",
         color: "lightGray",
+        cursor: "pointer",
         ...sx,
       }}
       onClick={() => handleSort(type)}
