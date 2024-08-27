@@ -52,3 +52,17 @@ export const fetchCharacterDetails = async (characterId: number) => {
   );
   return response.json();
 };
+
+const getIdFromUrl = (url: string) => {
+  const characterId = url.split("https://rickandmortyapi.com/api/episode/")[1];
+  return characterId;
+};
+
+export const fetchEpisods = async (episods: string[]) => {
+  const episodIds = episods.map((episod) => getIdFromUrl(episod));
+
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/episode/[${episodIds}]`
+  );
+  return response.json();
+};
