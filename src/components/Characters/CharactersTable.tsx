@@ -7,7 +7,7 @@ import CharacterRow from "./CharacterRow";
 import CustomHeadCell from "./CustomHeadCell";
 import { CharacterT } from "./CharacterType";
 
-const Characters = () => {
+const CharactersTable = () => {
   const [characters, setCharacters] = useState<CharacterT[]>(
     [] as CharacterT[]
   );
@@ -125,10 +125,11 @@ const Characters = () => {
       {hasNextPage && (
         <Box ref={infiniteRef}>
           {isFetchingNextPage ? "Loading more..." : ""}
+          {isFetchNextPageError ? "Fetching next page error" : ""}
         </Box>
       )}
     </Box>
   );
 };
 
-export default Characters;
+export default CharactersTable;

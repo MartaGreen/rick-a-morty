@@ -3,6 +3,7 @@ import { Box, TableRow, Typography } from "@mui/material";
 import CustomCell from "@components/customization/CustomCell";
 import { CharacterT } from "./CharacterType";
 import CharacterTag from "./CharacterTag";
+import { Link } from "@tanstack/react-router";
 
 const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   const { id, name, status, gender, species, created, origin, url, image } =
@@ -20,7 +21,6 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
       sx={{
         "&:hover": {
           bgcolor: "black",
-          cursor: "pointer",
           transition: "0.3s",
         },
       }}
@@ -56,17 +56,9 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
           origin.name}
       </CustomCell>
       <CustomCell>
-        <a style={{ textDecoration: "none" }} href={url}>
-          <Typography
-            sx={{
-              color: "lightBlue",
-              textDecoration: "underline",
-              textDecorationColor: "lightBlue",
-            }}
-          >
-            Link
-          </Typography>
-        </a>
+        <Link to={`/characters/$characterId`} params={{ characterId: id }}>
+          Link
+        </Link>
       </CustomCell>
     </TableRow>
   );

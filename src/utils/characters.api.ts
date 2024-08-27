@@ -21,7 +21,6 @@ const generateCharactersIds = (page: number) => {
 };
 
 export const getCharacters = async (page: number) => {
-  console.log("Fetching data....");
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${generateCharactersIds(page)}]`
   );
@@ -45,4 +44,11 @@ export const getPagesTotal = async () => {
   });
 
   return totalResponse;
+};
+
+export const fetchCharacterDetails = async (characterId: number) => {
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/character/[${characterId}]`
+  );
+  return response.json();
 };

@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.7",
     "@tanstack/react-query": "^5.52.1",
+    "@tanstack/react-router": "^1.50.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -23,7 +24,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "generate-routes": "tsr generate",
+    "watch-routes": "tsr watch",
+    "start": "npm run watch-routes & craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject"
@@ -47,6 +50,8 @@
     ]
   },
   "devDependencies": {
+    "@tanstack/router-cli": "^1.51.0",
+    "@tanstack/router-devtools": "^1.51.0",
     "craco-alias": "^3.0.1"
   }
 }
