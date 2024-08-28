@@ -1,11 +1,14 @@
 import React from "react";
-import { Back, Dna, Gender, Globe, Pin } from "@components/icons";
 import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { fetchCharacterDetails, fetchEpisods } from "@utils/characters.api";
-import { CharacterT } from "@components/Characters/CharacterType";
+
+import { fetchCharacterDetails } from "@utils/characters.api";
+import { fetchEpisods } from "@utils/episods.api";
+import { CharacterT } from "@type/characters.type";
+
 import CharacterTag from "@components/Characters/CharacterTag";
+import { Back, Dna, Gender, Globe, Pin } from "@kit/icons";
 import InfoRow from "./InfoRow";
 
 type EpisodT = {
@@ -19,17 +22,26 @@ type EpisodT = {
 };
 
 const Character = ({ characterId, ...props }: { characterId: number }) => {
-  const { data, isFetching } = useQuery({
+  const {
+    data: characterData,
+    isFetching,
+    isError,
+  } = useQuery({
     queryKey: ["character", characterId],
     queryFn: () => fetchCharacterDetails(characterId),
   });
 
-  const { data: episods, isFetching: isFetchingEpisods } = useQuery({
+  const {
+    data: episods,
+    isFetching: isFetchingEpisods,
+    isError: isEpisodsError,
+  } = useQuery({
     queryKey: ["episods"],
-    queryFn: () => fetchEpisods(data[0].episode),
-    enabled: !!data,
+    queryFn: () => fetchEpisods(characterData[0].episode),
+    enabled: !!characterData,
   });
 
+  // If loading return Loading bar
   if (isFetching)
     return (
       <Box
@@ -37,19 +49,41 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
           width: "100%",
           height: "100vh",
           display: "flex",
+          flexDirection: "column",
+          gap: "10px",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "dark",
         }}
       >
-        <Typography>Character's data is loading ...</Typography>
+        <Typography sx={{ color: "white", fontSize: "16px" }}>
+          Character's data is loading ...
+        </Typography>
         <CircularProgress />
       </Box>
     );
 
-  const info: CharacterT = data[0];
+  if (isError)
+    return (
+      <Box
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "dark",
+        }}
+      >
+        <Typography sx={{ color: "white", fontSize: "16px" }}>
+          Error while loading data!
+        </Typography>
+      </Box>
+    );
 
-  console.log(episods);
+  const info: CharacterT = characterData[0];
 
   return (
     <Stack direction="row" gap="18px" sx={{ width: "720px", color: "white" }}>
@@ -106,7 +140,7 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
           </Stack>
         </Stack>
 
-        {!isFetchingEpisods && (
+        {!isFetchingEpisods && !isEpisodsError && (
           <Stack gap="12px">
             <Stack direction="row" gap="8px" alignItems="center">
               <Typography
@@ -117,7 +151,7 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
                   letterSpacing: "1.2px",
                 }}
               >
-                Episodes{" "}
+                Episodes
               </Typography>
               <Box
                 sx={{

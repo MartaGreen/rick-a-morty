@@ -1,9 +1,9 @@
 import React from "react";
 import { Box, TableRow, Typography } from "@mui/material";
-import CustomCell from "@components/customization/CustomCell";
-import { CharacterT } from "./CharacterType";
+import CustomCell from "@kit/styledComponents/CustomCell";
 import CharacterTag from "./CharacterTag";
 import { Link } from "@tanstack/react-router";
+import { CharacterT } from "@type/characters.type";
 
 const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   const { id, name, status, gender, species, created, origin, url, image } =
@@ -46,8 +46,12 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
       <CustomCell>
         <CharacterTag type={status} />
       </CustomCell>
-      <CustomCell>{gender}</CustomCell>
-      <CustomCell>{species}</CustomCell>
+      <CustomCell>
+        {(gender === "unknown" && <CharacterTag type="unknown" />) || gender}
+      </CustomCell>
+      <CustomCell>
+        {(species === "unknown" && <CharacterTag type="unknown" />) || species}
+      </CustomCell>
       <CustomCell>
         {today.toLocaleDateString("sk-SK", options).split(" ").join("")}
       </CustomCell>
@@ -56,8 +60,22 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
           origin.name}
       </CustomCell>
       <CustomCell>
-        <Link to={`/characters/$characterId`} params={{ characterId: id }}>
-          Link
+        <Link
+          to={`/characters/$characterId`}
+          params={{ characterId: id }}
+          style={{ textDecoration: "none" }}
+        >
+          <Typography
+            sx={{
+              color: "lightBlue",
+              textDecoration: "underline",
+              transition: "0.3s",
+              textUnderlineOffset: "2px",
+              "&:hover": { textDecoration: "none" },
+            }}
+          >
+            Link
+          </Typography>
         </Link>
       </CustomCell>
     </TableRow>

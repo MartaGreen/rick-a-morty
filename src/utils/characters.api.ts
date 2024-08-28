@@ -20,7 +20,8 @@ const generateCharactersIds = (page: number) => {
   return arr.join(",");
 };
 
-export const getCharacters = async (page: number) => {
+// fetch next PAGE_SIZE(5) characters according to the next page number
+export const fetchNextCharacters = async (page: number) => {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${generateCharactersIds(page)}]`
   );
@@ -36,7 +37,8 @@ type PagesResponseT = {
   };
 };
 
-export const getPagesTotal = async () => {
+// Calculates the number of pages based on total number of characters and page size
+export const calculateTotalPages = async () => {
   const response = await fetch("https://rickandmortyapi.com/api/character");
   const totalResponse = response.json().then((data: PagesResponseT) => {
     const charactersTotal = data.info.count;
@@ -49,20 +51,6 @@ export const getPagesTotal = async () => {
 export const fetchCharacterDetails = async (characterId: number) => {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${characterId}]`
-  );
-  return response.json();
-};
-
-const getIdFromUrl = (url: string) => {
-  const characterId = url.split("https://rickandmortyapi.com/api/episode/")[1];
-  return characterId;
-};
-
-export const fetchEpisods = async (episods: string[]) => {
-  const episodIds = episods.map((episod) => getIdFromUrl(episod));
-
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/episode/[${episodIds}]`
   );
   return response.json();
 };

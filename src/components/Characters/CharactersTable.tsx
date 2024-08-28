@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Box, Table, TableBody, TableHead, TableRow } from "@mui/material";
 import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getCharacters, getPagesTotal } from "@utils/characters.api";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import CharacterRow from "./CharacterRow";
 import CustomHeadCell from "./CustomHeadCell";
-import { CharacterT } from "./CharacterType";
+import { CharacterT } from "@type/characters.type";
+import {
+  fetchNextCharacters,
+  calculateTotalPages,
+} from "@utils/characters.api";
 
 const CharactersTable = () => {
   const [characters, setCharacters] = useState<CharacterT[]>(
@@ -15,7 +25,7 @@ const CharactersTable = () => {
   // Fetch characters' total pages amount
   const { data: pagesTotal } = useQuery({
     queryKey: ["pagesTotal"],
-    queryFn: getPagesTotal,
+    queryFn: calculateTotalPages,
   });
 
   const {
@@ -26,7 +36,8 @@ const CharactersTable = () => {
     isFetchNextPageError,
   } = useInfiniteQuery({
     queryKey: ["characters"],
-    queryFn: ({ pageParam }: { pageParam: number }) => getCharacters(pageParam),
+    queryFn: ({ pageParam }: { pageParam: number }) =>
+      fetchNextCharacters(pageParam),
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const nextPage = lastPageParam + 1;
@@ -36,6 +47,7 @@ const CharactersTable = () => {
     enabled: !!pagesTotal, // Wait until total pages data is fetched
   });
 
+  // Initialize characters when the component is revisited (cached data)
   useEffect(() => {
     if (data) setCharacters(data.pages.flat());
   }, []);
@@ -136,8 +148,10 @@ const CharactersTable = () => {
       </Table>
       {hasNextPage && (
         <Box ref={infiniteRef}>
-          {isFetchingNextPage ? "Loading more..." : ""}
-          {isFetchNextPageError ? "Fetching next page error" : ""}
+          <Typography sx={{ color: "white", fontSize: "16px" }}>
+            {isFetchingNextPage ? "Loading more..." : ""}
+            {isFetchNextPageError ? "Fetching next page error" : ""}
+          </Typography>
         </Box>
       )}
     </Box>

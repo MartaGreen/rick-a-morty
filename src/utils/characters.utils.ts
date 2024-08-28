@@ -1,12 +1,4 @@
-import { CharacterT } from "@components/Characters/CharacterType";
-
-export type SortTypesT =
-  | "name"
-  | "status"
-  | "gender"
-  | "species"
-  | "created"
-  | "origin";
+import { CharacterT, SortTypesT } from "@type/characters.type";
 
 export const charactersSort = (
   characters: CharacterT[],
