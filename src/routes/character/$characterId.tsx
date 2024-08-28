@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { createFileRoute } from "@tanstack/react-router";
 import Character from "@components/Character/Character";
 
-export const Route: any = createFileRoute("/characters/$characterId")({
+export const Route: any = createFileRoute("/character/$characterId")({
   component: CharacterDetails,
 });
 

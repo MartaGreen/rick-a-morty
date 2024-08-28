@@ -11,18 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as CharactersIndexImport } from './routes/characters/index'
-import { Route as CharactersCharacterIdImport } from './routes/characters/$characterId'
+import { Route as IndexImport } from './routes/index'
+import { Route as CharacterCharacterIdImport } from './routes/character/$characterId'
 
 // Create/Update Routes
 
-const CharactersIndexRoute = CharactersIndexImport.update({
-  path: '/characters/',
+const IndexRoute = IndexImport.update({
+  path: '/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const CharactersCharacterIdRoute = CharactersCharacterIdImport.update({
-  path: '/characters/$characterId',
+const CharacterCharacterIdRoute = CharacterCharacterIdImport.update({
+  path: '/character/$characterId',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -30,18 +30,18 @@ const CharactersCharacterIdRoute = CharactersCharacterIdImport.update({
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/characters/$characterId': {
-      id: '/characters/$characterId'
-      path: '/characters/$characterId'
-      fullPath: '/characters/$characterId'
-      preLoaderRoute: typeof CharactersCharacterIdImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/characters/': {
-      id: '/characters/'
-      path: '/characters'
-      fullPath: '/characters'
-      preLoaderRoute: typeof CharactersIndexImport
+    '/character/$characterId': {
+      id: '/character/$characterId'
+      path: '/character/$characterId'
+      fullPath: '/character/$characterId'
+      preLoaderRoute: typeof CharacterCharacterIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -50,8 +50,8 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  CharactersCharacterIdRoute,
-  CharactersIndexRoute,
+  IndexRoute,
+  CharacterCharacterIdRoute,
 })
 
 /* prettier-ignore-end */
@@ -62,15 +62,15 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/characters/$characterId",
-        "/characters/"
+        "/",
+        "/character/$characterId"
       ]
     },
-    "/characters/$characterId": {
-      "filePath": "characters/$characterId.tsx"
+    "/": {
+      "filePath": "index.tsx"
     },
-    "/characters/": {
-      "filePath": "characters/index.tsx"
+    "/character/$characterId": {
+      "filePath": "character/$characterId.tsx"
     }
   }
 }

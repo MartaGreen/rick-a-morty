@@ -73,7 +73,7 @@ const CharactersTable = () => {
     hasNextPage,
     onLoadMore: fetchNextPage,
     disabled: Boolean(isFetchNextPageError),
-    rootMargin: "0px 0px 100px 0px",
+    rootMargin: "0px 0px 200px 0px",
     delayInMs: 50,
   });
 

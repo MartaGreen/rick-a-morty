@@ -61,7 +61,7 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
       </CustomCell>
       <CustomCell>
         <Link
-          to={`/characters/$characterId`}
+          to={`/character/$characterId`}
           params={{ characterId: id }}
           style={{ textDecoration: "none" }}
         >

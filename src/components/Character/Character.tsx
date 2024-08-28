@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, CircularProgress, Stack, Typography, Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 
 import { fetchCharacterDetails } from "@utils/characters.api";
 import { fetchEpisods } from "@utils/episods.api";
@@ -22,6 +22,8 @@ type EpisodT = {
 };
 
 const Character = ({ characterId, ...props }: { characterId: number }) => {
+  const router = useRouter();
+
   const {
     data: characterData,
     isFetching,
@@ -40,6 +42,8 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
     queryFn: () => fetchEpisods(characterData[0].episode),
     enabled: !!characterData,
   });
+
+  const handleBack = () => router.history.back();
 
   // If loading return Loading bar
   if (isFetching)
@@ -103,7 +107,7 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
             alignItems: "center",
             gap: "4px",
           }}
-          to="/characters"
+          onClick={handleBack}
         >
           <Back sx={{ width: "24px", height: "24px" }} />
           <Typography
