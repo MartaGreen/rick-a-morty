@@ -27,7 +27,7 @@
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
     "start": "npm run watch-routes & craco start",
-    "build": "craco build",
+    "build": "npm run generate-routes && craco build",
     "test": "craco test",
     "eject": "craco eject"
   },
