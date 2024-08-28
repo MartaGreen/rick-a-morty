@@ -8,11 +8,17 @@
          "@config/*":[
             "./config/*"
          ],
-         "@pages/*":[
-            "./pages/*"
+         "@routes/*":[
+            "./routes/*"
          ],
          "@utils/*":[
             "./utils/*"
+         ],
+         "@type/*":[
+            "./type/*"
+         ],
+         "@kit/*":[
+            "./kit/*"
          ]
       }
    }

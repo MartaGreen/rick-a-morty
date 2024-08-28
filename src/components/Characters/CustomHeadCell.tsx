@@ -1,8 +1,8 @@
-import { Box, TableCell, Typography } from "@mui/material";
-import { charactersSort, SortTypesT } from "@utils/characters.utils";
 import { useState } from "react";
-import { CharacterT } from "./CharacterType";
-import Arrow from "@components/icons/Arrow";
+import { Box, TableCell, Typography } from "@mui/material";
+import Arrow from "@kit/icons/Arrow";
+import { charactersSort } from "@utils/characters.utils";
+import { SortTypesT, CharacterT } from "@type/characters.type";
 
 type CustomTableCellT = {
   children?: React.ReactNode;

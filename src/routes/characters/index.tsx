@@ -1,8 +1,13 @@
 import React from "react";
 import { Box } from "@mui/system";
-import Characters from "../components/Characters/Characters";
+import CharactersTable from "@components/Characters/CharactersTable";
+import { createFileRoute } from "@tanstack/react-router";
 
-function App() {
+export const Route = createFileRoute("/characters/")({
+  component: Characters,
+});
+
+function Characters() {
   return (
     <Box
       className="App"
@@ -15,9 +20,7 @@ function App() {
         backgroundColor: "dark",
       }}
     >
-      <Characters />
+      <CharactersTable />
     </Box>
   );
 }
-
-export default App;

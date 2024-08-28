@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { Chip, Theme } from "@mui/material";
-import { StatusT } from "@components/Characters/CharacterType";
+import { StatusT } from "@type/characters.type";
 
 type ChipStyledT = {
   theme?: Theme;
   type: StatusT;
 };
 
-const StyledChip = styled(Chip)(({ theme, type }: ChipStyledT) => ({
+const Tag = styled(Chip)(({ theme, type }: ChipStyledT) => ({
   color:
     ((type === "Alive" || type === "Dead") && "#000") ||
     theme?.palette.lightGray,
@@ -21,4 +21,4 @@ const StyledChip = styled(Chip)(({ theme, type }: ChipStyledT) => ({
   height: "max-content",
 }));
 
-export default StyledChip;
+export default Tag;

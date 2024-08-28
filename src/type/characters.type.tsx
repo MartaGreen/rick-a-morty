@@ -21,3 +21,11 @@ export type CharacterT = {
   url: string;
   created: string;
 };
+
+export type SortTypesT =
+  | "name"
+  | "status"
+  | "gender"
+  | "species"
+  | "created"
+  | "origin";

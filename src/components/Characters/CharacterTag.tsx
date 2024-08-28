@@ -1,12 +1,12 @@
 import React from "react";
-import StyledChip from "@components/customization/Tag";
-import { StatusT } from "./CharacterType";
+import Tag from "@kit/styledComponents/Tag";
+import { StatusT } from "@type/characters.type";
 import { Typography } from "@mui/material";
-import { Cross, QuestionMark, Tick } from "@components/icons";
+import { Cross, QuestionMark, Tick } from "@kit/icons";
 
 function CharacterTag({ type, ...props }: { type: StatusT }) {
   return (
-    <StyledChip
+    <Tag
       type={type}
       label={
         <Typography
