@@ -15,7 +15,7 @@ function CharacterDetails() {
       sx={{
         width: "100%",
         minWidth: "320px",
-        height: "100vh",
+        minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
