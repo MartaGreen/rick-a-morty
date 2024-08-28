@@ -37,11 +37,23 @@ const CharactersTable = () => {
   });
 
   useEffect(() => {
+    if (data) setCharacters(data.pages.flat());
+  }, []);
+
+  useEffect(() => {
     if (!data) return;
 
     const lastPage: number = data.pageParams.length - 1;
     const freshAddedCharacters = data.pages[lastPage];
-    setCharacters((prevState) => prevState.concat(freshAddedCharacters));
+
+    // ensures that characters are unique
+    setCharacters((prevState) => {
+      const updatedCharacters = prevState.concat(freshAddedCharacters);
+      return updatedCharacters.filter(
+        // check if character is unique
+        (character, index, array) => array.indexOf(character) === index
+      );
+    });
   }, [data]);
 
   const [infiniteRef, { rootRef }] = useInfiniteScroll({
@@ -49,7 +61,7 @@ const CharactersTable = () => {
     hasNextPage,
     onLoadMore: fetchNextPage,
     disabled: Boolean(isFetchNextPageError),
-    rootMargin: "0px 0px 300px 0px",
+    rootMargin: "0px 0px 100px 0px",
     delayInMs: 50,
   });
 
@@ -57,7 +69,7 @@ const CharactersTable = () => {
     <Box
       sx={{
         width: "1084px",
-        maxHeight: "460px",
+        maxHeight: "290px",
         overflow: "auto",
       }}
       ref={rootRef}
