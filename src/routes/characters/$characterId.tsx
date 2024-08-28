@@ -14,11 +14,13 @@ function CharacterDetails() {
     <Box
       sx={{
         width: "100%",
+        minWidth: "320px",
         height: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: { xs: "baseline", md: "center" },
         justifyContent: "center",
         backgroundColor: "dark",
+        p: "15px",
       }}
     >
       <Character characterId={characterId} />

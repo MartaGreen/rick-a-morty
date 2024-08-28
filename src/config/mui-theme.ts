@@ -28,6 +28,15 @@ const theme = createTheme({
     lightGray: "#BCBDBD",
     lightBlue: "#59ABE6",
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 500,
+      md: 650,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   typography: {
     fontFamily: ["Montserrat", "sans-serif"].join(","),
     fontSize: 14,

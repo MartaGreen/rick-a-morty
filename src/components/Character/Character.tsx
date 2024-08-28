@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import { Box, CircularProgress, Stack, Typography, Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 
@@ -86,61 +86,82 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
   const info: CharacterT = characterData[0];
 
   return (
-    <Stack direction="row" gap="18px" sx={{ width: "720px", color: "white" }}>
-      <Link
-        style={{
-          width: "81px",
-          height: "40px",
-          textDecoration: "none",
+    <Grid
+      container
+      justifyContent="right"
+      sx={{ maxWidth: "720px", width: "100%", color: "white" }}
+      gap="25px"
+    >
+      <Grid item md={1.2} sm={12} xs={12}>
+        <Link
+          style={{
+            width: "81px",
+            height: "40px",
+            textDecoration: "none",
 
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-        }}
-        to="/characters"
-      >
-        <Back sx={{ width: "24px", height: "24px" }} />
-        <Typography
-          variant="h4"
+            display: "flex",
+            alignItems: "center",
+            gap: "4px",
+          }}
+          to="/characters"
+        >
+          <Back sx={{ width: "24px", height: "24px" }} />
+          <Typography
+            variant="h4"
+            sx={{
+              color: "white",
+              textTransform: "uppercase",
+              letterSpacing: "1.4px",
+            }}
+          >
+            Back
+          </Typography>
+        </Link>
+      </Grid>
+      <Grid item md={5.1} sm={6} xs={12}>
+        <Box
           sx={{
-            color: "white",
-            textTransform: "uppercase",
-            letterSpacing: "1.4px",
+            maxWidth: "300px",
+            maxHeight: "300px",
+            width: "100%",
+            height: "100%",
+            minWidth: "100px",
           }}
         >
-          Back
-        </Typography>
-      </Link>
-      <Stack gap="24px" sx={{ width: "611px" }}>
-        <Stack direction="row" sx={{ gap: "30px" }}>
-          <Box sx={{ width: "300px", height: "300px" }}>
-            <img src={info.image} alt={info.name} />
-          </Box>
-          <Stack gap="26px">
-            <Stack direction="row" alignItems="center" gap="28px">
-              <Typography
-                variant="h4"
-                sx={{
-                  fontSize: "32px",
-                  lineHeight: "40px",
-                  letterSpacing: "-0.64px",
-                }}
-              >
-                {info.name}
-              </Typography>
-              <CharacterTag type={info.status} />
-            </Stack>
+          <img
+            style={{ width: "100%", height: "auto" }}
+            src={info.image}
+            alt={info.name}
+          />
+        </Box>
+      </Grid>
+      <Grid item md sm={5.2} xs={12}>
+        <Stack gap="26px">
+          <Stack direction="row" alignItems="center" gap="28px">
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: "32px",
+                lineHeight: "40px",
+                letterSpacing: "-0.64px",
+              }}
+            >
+              {info.name}
+            </Typography>
+            <CharacterTag type={info.status} />
+          </Stack>
 
-            <Stack gap="16px">
-              <InfoRow name={info.gender} Icon={Gender} />
-              <InfoRow name={info.species} Icon={Dna} />
-              <InfoRow name={info.origin.name} Icon={Globe} />
-              <InfoRow name={info.location.name} Icon={Pin} />
-            </Stack>
+          <Stack gap="16px">
+            <InfoRow name={info.gender} Icon={Gender} />
+            <InfoRow name={info.species} Icon={Dna} />
+            <InfoRow name={info.origin.name} Icon={Globe} />
+            <InfoRow name={info.location.name} Icon={Pin} />
           </Stack>
         </Stack>
+      </Grid>
 
-        {!isFetchingEpisods && !isEpisodsError && (
+      {!isFetchingEpisods && !isEpisodsError && (
+        <Grid item md={10.4} sm={12} xs={12}>
           <Stack gap="12px">
             <Stack direction="row" gap="8px" alignItems="center">
               <Typography
@@ -175,9 +196,9 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
               {episods.map((episod: EpisodT) => episod.name).join(", ")}
             </Typography>
           </Stack>
-        )}
-      </Stack>
-    </Stack>
+        </Grid>
+      )}
+    </Grid>
   );
 };
 
