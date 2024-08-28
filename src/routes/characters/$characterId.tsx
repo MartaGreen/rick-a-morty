@@ -17,7 +17,7 @@ function CharacterDetails() {
         minWidth: "320px",
         height: "100vh",
         display: "flex",
-        alignItems: { xs: "baseline", md: "center" },
+        alignItems: "center",
         justifyContent: "center",
         backgroundColor: "dark",
         p: "15px",

@@ -15,7 +15,7 @@ function Characters() {
         width: "100%",
         height: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: { xs: "baseline", md: "center" },
         justifyContent: "center",
         backgroundColor: "dark",
       }}

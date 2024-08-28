@@ -41,7 +41,7 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
             alt={id.toString()}
           />
         </Box>
-        <Typography>{name}</Typography>
+        <Typography sx={{ fontSize: "14px" }}>{name}</Typography>
       </CustomCell>
       <CustomCell>
         <CharacterTag type={status} />
@@ -68,6 +68,7 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
           <Typography
             sx={{
               color: "lightBlue",
+              fontSize: "14px",
               textDecoration: "underline",
               transition: "0.3s",
               textUnderlineOffset: "2px",
