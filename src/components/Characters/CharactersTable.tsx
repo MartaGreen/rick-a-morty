@@ -148,7 +148,9 @@ const CharactersTable = () => {
       </Table>
       {hasNextPage && (
         <Box ref={infiniteRef}>
-          <Typography sx={{ color: "white", fontSize: "16px" }}>
+          <Typography
+            sx={{ color: "white", fontSize: "20px", textAlign: "center" }}
+          >
             {isFetchingNextPage ? "Loading more..." : ""}
             {isFetchNextPageError ? "Fetching next page error" : ""}
           </Typography>

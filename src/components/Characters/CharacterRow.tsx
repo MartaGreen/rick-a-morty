@@ -2,10 +2,12 @@ import React from "react";
 import { Box, TableRow, Typography } from "@mui/material";
 import CustomCell from "@kit/styledComponents/CustomCell";
 import CharacterTag from "./CharacterTag";
-import { Link } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { CharacterT } from "@type/characters.type";
 
 const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
+  const router = useRouter();
+
   const { id, name, status, gender, species, created, origin, url, image } =
     characterData;
 
@@ -16,6 +18,8 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
   };
   var today = new Date(created);
 
+  const handleGoToCharacter = () => router.history.push(`/character/${id}`);
+
   return (
     <TableRow
       sx={{
@@ -25,6 +29,7 @@ const CharacterRow = ({ characterData }: { characterData: CharacterT }) => {
         },
       }}
       key={id}
+      onClick={handleGoToCharacter}
     >
       <CustomCell
         sx={{
