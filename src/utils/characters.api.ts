@@ -25,6 +25,7 @@ export const fetchNextCharacters = async (page: number) => {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${generateCharactersIds(page)}]`
   );
+  if (!response.ok) throw new Error(response.statusText);
   return response.json();
 };
 
@@ -40,6 +41,7 @@ type PagesResponseT = {
 // Calculates the number of pages based on total number of characters and page size
 export const calculateTotalPages = async () => {
   const response = await fetch("https://rickandmortyapi.com/api/character");
+  if (!response.ok) throw new Error(response.statusText);
   const totalResponse = response.json().then((data: PagesResponseT) => {
     const charactersTotal = data.info.count;
     return Math.ceil(charactersTotal / PAGE_SIZE);
@@ -52,5 +54,6 @@ export const fetchCharacterDetails = async (characterId: number) => {
   const response = await fetch(
     `https://rickandmortyapi.com/api/character/[${characterId}]`
   );
+  if (!response.ok) throw new Error(response.statusText);
   return response.json();
 };

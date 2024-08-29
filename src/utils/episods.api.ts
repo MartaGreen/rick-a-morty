@@ -10,5 +10,6 @@ export const fetchEpisods = async (episods: string[]) => {
   const response = await fetch(
     `https://rickandmortyapi.com/api/episode/[${episodIds}]`
   );
+  if (!response.ok) throw new Error(response.statusText);
   return response.json();
 };

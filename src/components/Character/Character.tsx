@@ -10,6 +10,7 @@ import { CharacterT } from "@type/characters.type";
 import CharacterTag from "@components/Characters/CharacterTag";
 import { Back, Dna, Gender, Globe, Pin } from "@kit/icons";
 import InfoRow from "./InfoRow";
+import { ErrorStatus, PendingStatus } from "@kit/statusHandler";
 
 type EpisodT = {
   id: number;
@@ -24,11 +25,7 @@ type EpisodT = {
 const Character = ({ characterId, ...props }: { characterId: number }) => {
   const router = useRouter();
 
-  const {
-    data: characterData,
-    isFetching,
-    isError,
-  } = useQuery({
+  const { data: characterData, status } = useQuery({
     queryKey: ["character", characterId],
     queryFn: () => fetchCharacterDetails(characterId),
   });
@@ -37,6 +34,7 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
     data: episods,
     isFetching: isFetchingEpisods,
     isError: isEpisodsError,
+    status: episodsStatus,
   } = useQuery({
     queryKey: ["episods"],
     queryFn: () => fetchEpisods(characterData[0].episode),
@@ -45,49 +43,7 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
 
   const handleBack = () => router.history.back();
 
-  // If loading return Loading bar
-  if (isFetching)
-    return (
-      <Box
-        sx={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "dark",
-        }}
-      >
-        <Typography sx={{ color: "white", fontSize: "16px" }}>
-          Character's data is loading ...
-        </Typography>
-        <CircularProgress />
-      </Box>
-    );
-
-  if (isError)
-    return (
-      <Box
-        sx={{
-          width: "100%",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "dark",
-        }}
-      >
-        <Typography sx={{ color: "white", fontSize: "16px" }}>
-          Error while loading data!
-        </Typography>
-      </Box>
-    );
-
-  const info: CharacterT = characterData[0];
+  const info: CharacterT = characterData ? characterData[0] : {};
 
   return (
     <Grid
@@ -122,86 +78,103 @@ const Character = ({ characterId, ...props }: { characterId: number }) => {
           </Typography>
         </Link>
       </Grid>
-      <Grid item md={5.1} sm={6} xs={12}>
-        <Box
-          sx={{
-            maxWidth: "300px",
-            maxHeight: "300px",
-            width: "100%",
-            height: "100%",
-            minWidth: "100px",
-          }}
-        >
-          <img
-            style={{ width: "100%", height: "auto" }}
-            src={info.image}
-            alt={info.name}
-          />
-        </Box>
-      </Grid>
-      <Grid item md sm={5.2} xs={12}>
-        <Stack gap="26px">
-          <Stack direction="row" alignItems="center" gap="28px">
-            <Typography
-              variant="h4"
-              sx={{
-                fontSize: "32px",
-                lineHeight: "40px",
-                letterSpacing: "-0.64px",
-              }}
-            >
-              {info.name}
-            </Typography>
-            <CharacterTag type={info.status} />
-          </Stack>
 
-          <Stack gap="16px">
-            <InfoRow name={info.gender} Icon={Gender} />
-            <InfoRow name={info.species} Icon={Dna} />
-            <InfoRow name={info.origin.name} Icon={Globe} />
-            <InfoRow name={info.location.name} Icon={Pin} />
-          </Stack>
-        </Stack>
-      </Grid>
-
-      {!isFetchingEpisods && !isEpisodsError && (
-        <Grid item md={10.4} sm={12} xs={12}>
-          <Stack gap="12px">
-            <Stack direction="row" gap="8px" alignItems="center">
-              <Typography
-                sx={{
-                  fontSize: "12px",
-                  fontWeight: "bold",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.2px",
-                }}
-              >
-                Episodes
-              </Typography>
+      {(status === "pending" && (
+        <Grid item md sm xs>
+          <PendingStatus>Character's data is loading ...</PendingStatus>
+        </Grid>
+      )) ||
+        (status === "error" && (
+          <Grid item md sm xs>
+            <ErrorStatus />
+          </Grid>
+        )) || (
+          <>
+            <Grid item md={5.1} sm={6} xs={12}>
               <Box
                 sx={{
-                  width: "23px",
-                  height: "23px",
-                  backgroundColor: "#0D8CD2",
-                  padding: "5px",
-                  borderRadius: "5px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: "bold",
-                  fontSize: "11px",
+                  maxWidth: "300px",
+                  maxHeight: "300px",
+                  width: "100%",
+                  height: "100%",
+                  minWidth: "100px",
                 }}
               >
-                {episods.length}
+                <img
+                  style={{ width: "100%", height: "auto" }}
+                  src={info.image}
+                  alt={info.name}
+                />
               </Box>
-            </Stack>
+            </Grid>
+            <Grid item md sm={5.2} xs={12}>
+              <Stack gap="26px">
+                <Stack direction="row" alignItems="center" gap="28px">
+                  <Typography
+                    variant="h4"
+                    sx={{
+                      fontSize: "32px",
+                      lineHeight: "40px",
+                      letterSpacing: "-0.64px",
+                    }}
+                  >
+                    {info.name}
+                  </Typography>
+                  <CharacterTag type={info.status} />
+                </Stack>
 
-            <Typography sx={{ fontSize: "14px", lineHeight: "19px" }}>
-              {episods.map((episod: EpisodT) => episod.name).join(", ")}
-            </Typography>
-          </Stack>
-        </Grid>
-      )}
+                <Stack gap="16px">
+                  <InfoRow name={info.gender} Icon={Gender} />
+                  <InfoRow name={info.species} Icon={Dna} />
+                  <InfoRow name={info.origin.name} Icon={Globe} />
+                  <InfoRow name={info.location.name} Icon={Pin} />
+                </Stack>
+              </Stack>
+            </Grid>
+
+            {(episodsStatus === "pending" && (
+              <PendingStatus>Loading episods data ...</PendingStatus>
+            )) ||
+              (episodsStatus === "error" && <ErrorStatus />) || (
+                <Grid item md={10.4} sm={12} xs={12}>
+                  <Stack gap="12px">
+                    <Stack direction="row" gap="8px" alignItems="center">
+                      <Typography
+                        sx={{
+                          fontSize: "12px",
+                          fontWeight: "bold",
+                          textTransform: "uppercase",
+                          letterSpacing: "1.2px",
+                        }}
+                      >
+                        Episodes
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: "23px",
+                          height: "23px",
+                          backgroundColor: "#0D8CD2",
+                          padding: "5px",
+                          borderRadius: "5px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontWeight: "bold",
+                          fontSize: "11px",
+                        }}
+                      >
+                        {episods.length}
+                      </Box>
+                    </Stack>
+
+                    <Typography sx={{ fontSize: "14px", lineHeight: "19px" }}>
+                      {episods.map((episod: EpisodT) => episod.name).join(", ")}
+                    </Typography>
+                  </Stack>
+                </Grid>
+              )}
+          </>
+        )}
     </Grid>
   );
 };

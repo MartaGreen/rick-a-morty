@@ -3,6 +3,7 @@ import useInfiniteScroll from "react-infinite-scroll-hook";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
   Box,
+  CircularProgress,
   Table,
   TableBody,
   TableHead,
@@ -16,6 +17,7 @@ import {
   fetchNextCharacters,
   calculateTotalPages,
 } from "@utils/characters.api";
+import { ErrorStatus, PendingStatus } from "@kit/statusHandler";
 
 const CharactersTable = () => {
   const [characters, setCharacters] = useState<CharacterT[]>(
@@ -34,6 +36,7 @@ const CharactersTable = () => {
     fetchNextPage,
     isFetchingNextPage,
     isFetchNextPageError,
+    status,
   } = useInfiniteQuery({
     queryKey: ["characters"],
     queryFn: ({ pageParam }: { pageParam: number }) =>
@@ -41,7 +44,6 @@ const CharactersTable = () => {
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
       const nextPage = lastPageParam + 1;
-      console.log("Fetching next page... ", nextPage);
       return nextPage === pagesTotal ? undefined : nextPage;
     },
     enabled: !!pagesTotal, // Wait until total pages data is fetched
@@ -73,7 +75,7 @@ const CharactersTable = () => {
     hasNextPage,
     onLoadMore: fetchNextPage,
     disabled: Boolean(isFetchNextPageError),
-    rootMargin: "0px 0px 200px 0px",
+    rootMargin: "0px 0px 250px 0px",
     delayInMs: 50,
   });
 
@@ -81,7 +83,7 @@ const CharactersTable = () => {
     <Box
       sx={{
         width: "1084px",
-        maxHeight: "290px",
+        maxHeight: "350px",
         overflow: "auto",
       }}
       ref={rootRef}
@@ -141,19 +143,34 @@ const CharactersTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {characters.map((character: any) => (
-            <CharacterRow key={character.id} characterData={character} />
-          ))}
+          {(status === "pending" && !data && (
+            <tr>
+              <td colSpan={7} align="center">
+                <PendingStatus />
+              </td>
+            </tr>
+          )) ||
+            (status === "error" && !data && (
+              <tr>
+                <td colSpan={7} align="center">
+                  <ErrorStatus />
+                </td>
+              </tr>
+            )) ||
+            characters.map((character: any) => (
+              <CharacterRow key={character.id} characterData={character} />
+            ))}
         </TableBody>
       </Table>
       {hasNextPage && (
         <Box ref={infiniteRef}>
-          <Typography
-            sx={{ color: "white", fontSize: "20px", textAlign: "center" }}
-          >
-            {isFetchingNextPage ? "Loading more..." : ""}
-            {isFetchNextPageError ? "Fetching next page error" : ""}
-          </Typography>
+          {isFetchingNextPage ? (
+            <PendingStatus icon={false}>Loading more data...</PendingStatus>
+          ) : isFetchNextPageError ? (
+            <ErrorStatus>Unable to load more data</ErrorStatus>
+          ) : (
+            ""
+          )}
         </Box>
       )}
     </Box>
